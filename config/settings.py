@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-DJANGO_APPS = [                           #기존 INSTALLED_APPS 내용을 DJANGo_APPS 만들고 옮김
+DJANGO_APPS = [  # 기존 INSTALLED_APPS 내용을 DJANGo_APPS 만들고 옮김
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,11 +39,15 @@ DJANGO_APPS = [                           #기존 INSTALLED_APPS 내용을 DJANG
     "django.contrib.staticfiles",
 ]
 
-PROJECT_APPS = [                    # PROJECT_APPS를 만들고 추가
+THIRD_PARTY_APPS = []
+
+PROJECT_APPS = [  # PROJECT_APPS를 만들고 추가
     "users.apps.UsersConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS       #INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS 
+INSTALLED_APPS = (
+    DJANGO_APPS + PROJECT_APPS
+)  # INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
