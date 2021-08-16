@@ -39,14 +39,18 @@ DJANGO_APPS = [  # 기존 INSTALLED_APPS 내용을 DJANGo_APPS 만들고 옮김
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "django_countries",
+]  # django_countries 라이브러리 앱에 추가
 
 PROJECT_APPS = [  # PROJECT_APPS를 만들고 추가
+    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
+    "rooms.apps.RoomsConfig",
 ]
 
 INSTALLED_APPS = (
-    DJANGO_APPS + PROJECT_APPS
+    DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 )  # INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
