@@ -49,6 +49,8 @@ PROJECT_APPS = [  # PROJECT_APPS를 만들고 추가
     "rooms.apps.RoomsConfig",
     "reviews.apps.ReviewsConfig",
     "reservations.apps.ReservationsConfig",
+    "lists.apps.ListsConfig",
+    "conversations.apps.ConversationsConfig",
 ]
 
 INSTALLED_APPS = (
