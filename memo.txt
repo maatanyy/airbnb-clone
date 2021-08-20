@@ -31,6 +31,9 @@ verbose_name_plural, verbose_name 사용하여 이름 수정
 amenities, facilities, house_rules 는 ManyToManyField로 작성 
 ordering을 이용하여 보이는 순서 변경 가능
 
-
+8. 20 
+list_display 를 사용하여 admin 페이지 꾸밈
+list_filter 를 이용하여 filter 가능 city 나 country 는 마지막쪽에 배치
+host__AAA 와 같이 __를 사용하여 Foreignkey 접근 
 
 
