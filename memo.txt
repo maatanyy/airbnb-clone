@@ -49,3 +49,23 @@ room.amenities.all() 처럼
 
 3) query_set manager
 all(), filter(), count() 등 사용
+
+
+9.1
+conversation model 에서 
+    def __str__(self):
+        usernames = []
+        for user in self.participants.all():
+            usernames.append(user.username)
+        return ",  ".join(usernames)
+        # 쿼리셋이 배열을 주는데 __str__은 스트링이 필요하므로 join을 써서 string 을 꺼냄
+
+9.2
+config settings.py 에 
+MEDIA_ROOT = BASE_DIR / "uploads"  # 이걸 추가해주면 이미지가 여기로 저장됨 uploads!!
+이미지 경로 지정
+
+URL_conf 변경
+urlpatterns에 새로운 static 경로 등록해줌
+static 함수를 보면 (url, 사진저장폴더경로) 로 되어있음
+이를 통하여 MEDIA_URL로 접근시 비로소 사진에 접근가능

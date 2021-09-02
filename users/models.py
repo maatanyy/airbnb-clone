@@ -28,7 +28,9 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
-    avatar = models.ImageField(blank=True)  # null은 database에서 blank는 form에서
+    avatar = models.ImageField(
+        upload_to="avatars", blank=True
+    )  # null은 database에서 blank는 form에서
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
 
     bio = models.TextField(blank=True)  # default or null

@@ -143,3 +143,7 @@ STATIC_URL = "/static/"
 AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_ROOT = BASE_DIR / "uploads"  # 이걸 추가해주면 이미지가 여기로 저장됨 uploads!!
+
+MEDIA_URL = "/media/"
