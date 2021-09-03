@@ -69,3 +69,14 @@ URL_conf 변경
 urlpatterns에 새로운 static 경로 등록해줌
 static 함수를 보면 (url, 사진저장폴더경로) 로 되어있음
 이를 통하여 MEDIA_URL로 접근시 비로소 사진에 접근가능
+
+9.3
+TabularInline, StackedInline
+
+room에서 저장할 때 대문자로 바꿔서 저장하기 -> save 메서드 오버라이드 
+def save(self, *args, **kwargs):
+        # self.city = str.capitalize(self.city)  도시 이름의 앞글자를 대문자로
+        self.city = (
+            self.city.title()
+        )  # 도시 이름이 두 단어 이상인 경우도 있기 때문에 이걸 쓰면 됨, upper는 모든 단어가 대문자로 됨
+        super().save(*args, **kwargs)
