@@ -41,6 +41,7 @@ DJANGO_APPS = [  # 기존 INSTALLED_APPS 내용을 DJANGo_APPS 만들고 옮김
 
 THIRD_PARTY_APPS = [
     "django_countries",
+    "django_seed",
 ]  # django_countries 라이브러리 앱에 추가
 
 PROJECT_APPS = [  # PROJECT_APPS를 만들고 추가

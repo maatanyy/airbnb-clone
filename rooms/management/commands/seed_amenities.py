@@ -6,7 +6,7 @@ from rooms.models import Amenity
 
 class Command(BaseCommand):
 
-    help = "This command tells me that he loves me"
+    help = "This command create amenities"
 
     """ def add_arguments(self, parser):
         parser.add_argument(
@@ -61,4 +61,4 @@ class Command(BaseCommand):
         ]
         for a in amenities:
             Amenity.objects.create(name=a)
-        self.stdout.write(self.style.SUCCESS("Amenities created!"))
+        self.stdout.write(self.style.SUCCESS("Amenities created!"))  # 확인문구
