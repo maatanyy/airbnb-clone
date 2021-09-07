@@ -80,3 +80,8 @@ def save(self, *args, **kwargs):
             self.city.title()
         )  # 도시 이름이 두 단어 이상인 경우도 있기 때문에 이걸 쓰면 됨, upper는 모든 단어가 대문자로 됨
         super().save(*args, **kwargs)
+
+9.7 
+django_seed 설치하여 가짜 데이터 만들어줌
+lambda 와 faker 를 이용하여 보다 그럴듯한 데이터를 만들어 줄 수 있음
+photo 는 조금 더 복잡함 seed_rooms 참조 
