@@ -42,12 +42,31 @@ class Command(BaseCommand):
         )
         created_photos = seeder.execute()
         created_clean = flatten(list(created_photos.values()))
+        amenities = room_models.Amenity.objects.all()
+        facilities = room_models.Facility.objects.all()
+        rules = room_models.HouseRule.objects.all()
         for pk in created_clean:
             room = room_models.Room.objects.get(pk=pk)
-            for i in range(3, random.randint(10, 17)):
+            for i in range(3, random.randint(10, 30)):
                 room_models.Photo.objects.create(
                     caption=seeder.faker.sentence(),
-                    room=room,
+                    room=room,  # foreignkey
                     file=f"room_photos/{random.randint(1,31)}.webp",
                 )
+
+            for a in amenities:
+                magic_number = random.randint(0, 15)
+                if magic_number % 2 == 0:
+                    room.amenities.add(a)  # 다대다 필드에서 추가하는 방법 (ManyToMany)
+
+            for f in facilities:
+                magic_number = random.randint(0, 15)
+                if magic_number % 2 == 0:
+                    room.facilities.add(f)  # 다대다 필드에서 추가하는 방법
+
+            for r in rules:
+                magic_number = random.randint(0, 15)
+                if magic_number % 2 == 0:
+                    room.house_rules.add(r)  # 다대다 필드에서 추가하는 방법
+
         self.stdout.write(self.style.SUCCESS(f"{number} rooms created!"))
