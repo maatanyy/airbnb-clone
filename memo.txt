@@ -89,3 +89,7 @@ photo 는 조금 더 복잡함 seed_rooms 참조
 9.20
 체크인 날짜는 지금, 체크 아웃은 랜덤으로 며칠 뒤로 설정하는데 이걸 하기 위해서 datetime, tiemdelta를 import 함
 config urls.py 에 include 추가하고 각 앱마다 urls.py는 없기 때문에 따로 만들어 줘야함
+템플릿 폴더 만든 후 setting.py DIR 에 경로를 추가해줘야함
+https://docs.djangoproject.com/ko/3.2/howto/overriding-templates/#overriding-from-the-project-s-templates-directory < 장고 공식문서
+template 에 context를 통해 객체 전달 가능 딕셔너리 형태로 하면 괜찮은듯, 그리고 template에서 {{}}를 통해
+꺼내 쓸 수 있고 {} 를 통해 파이썬 문법 사용 가능 
