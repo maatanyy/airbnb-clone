@@ -88,3 +88,4 @@ photo 는 조금 더 복잡함 seed_rooms 참조
 
 9.20
 체크인 날짜는 지금, 체크 아웃은 랜덤으로 며칠 뒤로 설정하는데 이걸 하기 위해서 datetime, tiemdelta를 import 함
+config urls.py 에 include 추가하고 각 앱마다 urls.py는 없기 때문에 따로 만들어 줘야함
