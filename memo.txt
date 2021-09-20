@@ -93,3 +93,23 @@ config urls.py 에 include 추가하고 각 앱마다 urls.py는 없기 때문�
 https://docs.djangoproject.com/ko/3.2/howto/overriding-templates/#overriding-from-the-project-s-templates-directory < 장고 공식문서
 template 에 context를 통해 객체 전달 가능 딕셔너리 형태로 하면 괜찮은듯, 그리고 template에서 {{}}를 통해
 꺼내 쓸 수 있고 {} 를 통해 파이썬 문법 사용 가능 
+base.html header.html footer.html 구분하기, 이렇게해야 css 할 때도 그렇고 편리함
+
+#11.1
+
+room view 에서 방을 가져오는데 
+page = int(request.GET.get("page", 1))
+    page_size = 10
+    limit = page_size * page
+    offset = limit - page_size
+    all_rooms = models.Room.objects.all()[offset:limit]
+
+를 사용하여 http://127.0.0.1:8000/?page=★ 별부분에 숫자가 들어옴에 따라 10개씩 보이게 코드를 짯는데
+나는 저번 프로젝트 때 paginator 를 사용했는데 이런 방법도 있다는 것에 놀람
+다만 page = 별부분에서 입력이 없을 때 (오류), 숫자가 매우 클 때 (오류 X)도 생각해봐야한다.
+
+#11.2
+
+page?=★ 에 각 <a href>를 이용해 작동하게 만들었다. 
+다만 여기서 문제점은 이전 페이지 다음 페이지로 이동하는 것과 이전, 다음 페이지가 있나 확인할 방법을 생각해줘야 한다는 것이다.
+
