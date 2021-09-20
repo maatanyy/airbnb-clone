@@ -85,3 +85,6 @@ def save(self, *args, **kwargs):
 django_seed 설치하여 가짜 데이터 만들어줌
 lambda 와 faker 를 이용하여 보다 그럴듯한 데이터를 만들어 줄 수 있음
 photo 는 조금 더 복잡함 seed_rooms 참조 
+
+9.20
+체크인 날짜는 지금, 체크 아웃은 랜덤으로 며칠 뒤로 설정하는데 이걸 하기 위해서 datetime, tiemdelta를 import 함
