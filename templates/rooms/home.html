@@ -6,18 +6,19 @@ Home
 
 {% block content %}
 
-{% for room in rooms.object_list %}
+{% for room in page.object_list %}
 <h1>{{room.name}} / ${{room.price}}</h1>
 {% endfor %}
 
 <h5>
-    {% if rooms.has_previous %}
-    <a href="?page={{rooms.number|add:-1}}">Previous</a>
+    {% if page.has_previous %}
+    <a href="?page={{page.previos_page_number}}">Previous</a>
     {% endif %}
+
     <!--page + 1 로 접근하였으나 지원하지않음 따라서 장고필터중 하나인 add사용!-->
-    Page{{rooms.number}} of {{rooms.paginator.num_pages}}
-    {% if rooms.has_next %}
-    <a href="?page={{rooms.number|add:1}}">Next</a>
+    Page{{page.number}} of {{page.paginator.num_pages}}
+    {% if page.has_next %}
+    <a href="?page={{page.next_page_number}}">Next</a>
     {% endif %}
 
 </h5>

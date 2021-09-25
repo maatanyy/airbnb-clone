@@ -14,6 +14,6 @@ def all_rooms(request):
     # return HttpResponse(content=f"<h1>{now}</h1>")
     page = request.GET.get("page")
     room_list = models.Room.objects.all()
-    paginator = Paginator(room_list, 10)
+    paginator = Paginator(room_list, 10, orphans=5)
     rooms = paginator.get_page(page)
-    return render(request, "rooms/home.html", {"rooms": rooms})
+    return render(request, "rooms/home.html", {"page": rooms})
