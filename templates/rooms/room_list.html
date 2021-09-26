@@ -6,23 +6,25 @@ Home
 
 {% block content %}
 
-{{now}}
 
 {% for room in rooms %}
-<h1>{{room.name}} / ${{room.price}}</h1>
-{% endfor %}
+<h3>
+    <a href="{% url 'rooms:detail' room.pk %}">
+        {{room.name}}" / ${{room.price}}
+    </a>
+    {% endfor %}
 
-<h5>
-    {% if page_obj.has_previous %}
-    <a href="?page={{page_obj.previos_page_number}}">Previous</a>
-    {% endif %}
+    <h5>
+        {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previos_page_number}}">Previous</a>
+        {% endif %}
 
-    <!--page + 1 로 접근하였으나 지원하지않음 따라서 장고필터중 하나인 add사용!-->
-    Page{{page_obj.number}} of {{page_obj.paginator.num_pages}}
-    {% if page_obj.has_next %}
-    <a href="?page={{page_obj.next_page_number}}">Next</a>
-    {% endif %}
+        <!--page + 1 로 접근하였으나 지원하지않음 따라서 장고필터중 하나인 add사용!-->
+        Page{{page_obj.number}} of {{page_obj.paginator.num_pages}}
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">Next</a>
+        {% endif %}
 
-</h5>
+    </h5>
 
-{% endblock content %}
+    {% endblock content %}
