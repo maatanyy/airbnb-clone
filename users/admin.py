@@ -1,10 +1,10 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from . import models
+from django.contrib.auth.admin import UserAdmin  # UserAdmin 쓰기위해 이거 추가했음
+from . import models  # 추가했음
 
 
 # Register your models here.
-@admin.register(models.User)
+@admin.register(models.User)  # admin에 ueser을 등록하기 위해서 추가함
 class CustomUserAdmin(UserAdmin):
 
     """Custom User Admin"""

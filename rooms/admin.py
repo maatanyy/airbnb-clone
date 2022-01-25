@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.db.models.query_utils import check_rel_lookup_compatibility
-from . import models
+from . import models  # 추가
 
 
 @admin.register(models.RoomType, models.Facility, models.Amenity, models.HouseRule)

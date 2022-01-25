@@ -82,7 +82,7 @@ class Room(core_models.TimeStampedModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey(
+    host = models.ForeignKey(  # host는 user의 연장이니까 Foreignkey를 이용해서 만듬 물론 이걸 위해서 위에 import했음
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )
     room_type = models.ForeignKey(

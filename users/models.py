@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractUser
+
+# class User에서 model.model이 필요없고 다른걸 상속하기위해 이걸추가했다
 from django.db import models
 
 # Create your models here.
@@ -6,7 +8,7 @@ from django.db import models
 
 class User(AbstractUser):
 
-    """Custom User Model"""
+    """Custom User Model"""  # 어떤 class인지 알려주기 위해 추가한거임
 
     GENDER_MALE = "male"
     GENDER_FEMALE = "female"
