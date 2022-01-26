@@ -102,7 +102,9 @@ class Room(core_models.TimeStampedModel):
         )  # 도시 이름이 두 단어 이상인 경우도 있기 때문에 이걸 쓰면 됨, upper는 모든 단어가 대문자로 됨
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):  # 어떤 url을 갖고있던 지정하는곳으로 이동 (어드민페이지에서!)
+    def get_absolute_url(
+        self,
+    ):  # 어떤 url을 갖고있던 지정하는곳으로 이동 (어드민페이지에서!), 오버로드임, 즉 어드민 페이지에서만 변화보임
         return reverse("rooms:detail", kwargs={"pk": self.pk})
 
     def total_rating(self):

@@ -10,6 +10,7 @@ Home
 {% for room in rooms %}
 <h3>
     <a href="{% url 'rooms:detail' room.pk %}">
+        <!--url 태그를 이용해 각 링크만들어줌   napespace:경로-->
         {{room.name}}" / ${{room.price}}
     </a>
     {% endfor %}

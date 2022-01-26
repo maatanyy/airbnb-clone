@@ -153,4 +153,15 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     우리가 만든 유저를 쓸려고 settings.py에서 AUTH_USER_MODEL ="users.User" 추가했음
     만든 앱 사용하기 위해서는 settings.py에 추가해야함 
     
+#2022-01-26
+    related_name 은 타깃을 위한 것 Foreignkey부분 위주로 자세히 볼 필요 있음
+    def 를 통한 확인 함수 
+    7~9 skip
+    templates 장고에게 알려주기위해 settings.py DIRS에 추가
+    에러페이지에서 return 이 아닌 raise로 Http404 이용해서 해결해준다
+    htp404 페이지 확인은 
+    DEBUG = False
+    ALLOWED_HOSTS = "*"  로 바꿔줘야 가능하다
+    404.html은 다른 폴더에 있으면 안됨 templates 바로 아래에 있어야 한다
+    DetailView를 사용하면 장고는 기본적으로 url argument로 pk를 사용한다
 
