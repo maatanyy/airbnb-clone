@@ -169,5 +169,8 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     {% if amenity.pk|slugify in s_amenities  %}   <!--slugify는 모두다 string으로 바꿈 안쓰면 pk는 정수 s_amenities는 스트링이라 작동안됨
     나머지 체크 박스랑 label사용 폼으로 데이터 전달하는 과정
     search.html에서 instant랑 super_host는 value를 통해 값을 받는게아니라  if 사용해서 체크 된거 확인 
+    필터는 필요 없는 것도 없애는 과정도 필요 예를들어 룸타입이 없으면 검색이 가능하면 안됨
+    amenities facilities는 조건부 걸어서 필터 해줌 주의깊게 보자
+
 
  
