@@ -178,7 +178,7 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     widget를 이용하여 폼으 모양도 변경가능 장고 공식문서 form 부분 참조
     #13.7~13.8 영상까지 하면 폼은 완성 근데 문제는 선택한 결과를 아직 정하지는 않음
     views.py def search 안 form = forms.SearchForm 에 request.GET만 추가하면 form이 기억한다!!
-
+    로그인은 기존에 있는 회원인지 아이디 비번 맞는지 
 
 
  
