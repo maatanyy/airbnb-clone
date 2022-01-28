@@ -182,7 +182,7 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     user form보면 어케 검증하는지 확인가능 clean 사용 그리고 예외처리에서 #raise 에러 한곳에서 에러가 뜬다!!
     check_password 사용하려면 user를 붙여야한다
     cleaned_data를 return 해야한다 clean을 썻을경우
-
-
+    FormView이용해서 로그인 쉽게 만들수있다
+     https://ccbv.co.uk/projects/Django/4.0/django.views.generic.edit/FormView/ 및 장고 문서 loginview 참고
 
  
