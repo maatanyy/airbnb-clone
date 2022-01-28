@@ -1,7 +1,7 @@
 from math import ceil
 from django.core import paginator  # 올림함수 import
 from django.core.paginator import EmptyPage, Paginator
-from django.views.generic import ListView, DetailView  # ListView 사용하기 위해 추가
+from django.views.generic import ListView, DetailView, View  # ListView 사용하기 위해 추가
 from . import models, forms
 from django.shortcuts import render
 from django_countries import countries
@@ -39,9 +39,73 @@ class RoomDetail(DetailView):
 
     model = models.Room
 
+class SearchView(View):
 
-def search(request):
+    def get(self, request):
+        country = request.GET.get("country")
     
-    form = forms.SearchForm()
+        if country:
 
-    return render(request,"rooms/search.html", {"form" : form})
+            form = forms.SearchForm(request.GET)  #무슨데이터인지는 모르지만 어떤 데이터를 가지고 있다, #form = forms.SearchForm 에 request.GET만 추가하면 form이 기억한다!!
+
+            if form.is_valid():  #만약 에러가 없다면
+                city = form.cleaned_data.get("city")  
+                country = form.cleaned_data.get("country")
+                price = form.cleaned_data.get("price")
+                room_type = form.cleaned_data.get("room_type")
+                guests = form.cleaned_data.get("guests")
+                bedrooms = form.cleaned_data.get("bedrooms")
+                beds = form.cleaned_data.get("beds")
+                baths = form.cleaned_data.get("baths")
+                instant_book = form.cleaned_data.get("instant_book")
+                superhost = form.cleaned_data.get("superhost")
+                amenities = form.cleaned_data.get("amenities")
+                facilities = form.cleaned_data.get("facilities")
+
+                filter_args = {}
+
+                if city != "Anywhere":
+                    filter_args["city__startswith"] = city
+
+                filter_args["country"] = country
+
+                if room_type is not None:
+                    filter_args["room_type"] = room_type   #room_type 은 foreignkey이다
+
+                if price is not None:
+                    filter_args["price__lte"] = price
+
+                if guests is not None:
+                    filter_args["guests__gte"] = guests
+
+                if bedrooms is not None:
+                    filter_args["bedrooms__gte"] = bedrooms
+        
+                if beds is not None:
+                    filter_args["bedrooms__gte"] = beds
+        
+                if baths is not None:
+                    filter_args["baths__gte"] = baths
+
+                if instant_book is True:
+                    filter_args["instant_book"] = True
+
+                if superhost is True:
+                    filter_args["host__superhost"] = True
+                
+                rooms = models.Room.objects.filter(**filter_args)
+
+                for amenity in amenities: 
+                    rooms = rooms.filter(amenities=amenity)   #이부분 위 주석처리한 것과 잘 비교하자 이렇게하면 예를들어 amenity 2개 고르면
+                # 하나만 해당되느 것도 나왔는데 이렇게 하면 둘다 해당되는 것만 나오게 된다. filter.filter 요런느낌!!
+
+                for facility in facilities:
+                    rooms = rooms.filter(facilities=facility)
+
+        else:  #종종 빈 데이터 폼을 보여줘야 할 때 즉 첫 form을 가져와야 할 때
+            form = forms.SearchForm()
+
+        return render(request,"rooms/search.html", {"form": form, "rooms": rooms})
+
+
+

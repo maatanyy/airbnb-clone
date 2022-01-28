@@ -15,5 +15,5 @@ class SearchForm(forms.Form):
     baths = forms.IntegerField(required=False)
     instant_book = forms.BooleanField(required=False)
     superhost = forms.BooleanField(required=False)
-    amenities = forms.ModelMultipleChoiceField(queryset=models.Amenity.objects.all(), widget=forms.CheckboxSelectMultiple) #여러개 고를 수 있어야해서 ModelMultipleChoiceField사용
-    facilities = forms.ModelMultipleChoiceField(queryset=models.Facility.objects.all(), widget=forms.CheckboxSelectMultiple)
+    amenities = forms.ModelMultipleChoiceField(required=False, queryset=models.Amenity.objects.all(), widget=forms.CheckboxSelectMultiple) #여러개 고를 수 있어야해서 ModelMultipleChoiceField사용
+    facilities = forms.ModelMultipleChoiceField(required=False, queryset=models.Facility.objects.all(), widget=forms.CheckboxSelectMultiple)
