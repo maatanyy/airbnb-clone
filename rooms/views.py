@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, View  # ListView 사용�
 from . import models, forms
 from django.shortcuts import render
 from django_countries import countries
+from django.core.paginator import Paginator
 
 # from django.http import Http404
 # from django.shortcuts import render
@@ -94,18 +95,26 @@ class SearchView(View):
                     filter_args["host__superhost"] = True
                 
                 rooms = models.Room.objects.filter(**filter_args)
-
-                for amenity in amenities: 
-                    rooms = rooms.filter(amenities=amenity)   #이부분 위 주석처리한 것과 잘 비교하자 이렇게하면 예를들어 amenity 2개 고르면
-                # 하나만 해당되느 것도 나왔는데 이렇게 하면 둘다 해당되는 것만 나오게 된다. filter.filter 요런느낌!!
-
+                for amenity in amenities:
+                    rooms = rooms.filter(amenities=amenity)
                 for facility in facilities:
                     rooms = rooms.filter(facilities=facility)
+
+                qs = models.Room.objects.filter(**filter_args).order_by("created")  #paginator를 쓰기위해서 시작 끝을 알아야하니까 이렇게 알려줌
+
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                rooms = paginator.get_page(page)
+
+                return render(request,"rooms/search.html", {"form": form, "rooms": rooms})
 
         else:  #종종 빈 데이터 폼을 보여줘야 할 때 즉 첫 form을 가져와야 할 때
             form = forms.SearchForm()
 
-        return render(request,"rooms/search.html", {"form": form, "rooms": rooms})
+        
+        return render(request,"rooms/search.html", {"form": form })
 
 
 
