@@ -31,4 +31,12 @@ class LoginForm(forms.Form):
 #만약 clean_email ,clean_password따로 만드는 방식쓰면 error를 raise써서 하지만 이렇게 clean으로 할경우에는 에러를 따로만들어준다
 
 
+class SignUpForm(forms.Form):
+
+    first_name = forms.CharField(max_length=80)
+    last_name = forms.CharField(max_length=80)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput)
+
 

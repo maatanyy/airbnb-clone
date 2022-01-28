@@ -45,3 +45,31 @@ class LoginView(FormView):
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
+
+
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    success_url = reverse_lazy("core:home")
+    initial = {
+        'first_name': "Min Sung",
+        'last_name': "Noh",
+        'email': "min@naver.com",
+    }
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError("User already exists with that email")
+        except models.User.DoesNotExist:
+            return email
+    
+    def clean_password1(self):
+        password = self.clean_data.get("password")
+        password1 = self.clean_data.get("password1")
+
+        if password != password1:
+            raise forms.ValidationError("Password confirmation does not match")
+        else:
+            return password
