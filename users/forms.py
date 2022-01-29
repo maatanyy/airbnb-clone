@@ -31,21 +31,19 @@ class LoginForm(forms.Form):
 #만약 clean_email ,clean_password따로 만드는 방식쓰면 error를 raise써서 하지만 이렇게 clean으로 할경우에는 에러를 따로만들어준다
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(forms.ModelForm):
 
-    first_name = forms.CharField(max_length=80)
-    last_name = forms.CharField(max_length=80)
-    email = forms.EmailField()
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email",)
+
+    #모델 폼 사용 전 사용하던 거임
+    #first_name = forms.CharField(max_length=80)
+    #last_name = forms.CharField(max_length=80)
+    #email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     password1 = forms.CharField(widget=forms.PasswordInput)
 
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        try:
-            models.User.objects.get(email=email)
-            raise forms.ValidationError("User already exists with that email")
-        except models.User.DoesNotExist:
-            return email
     
     def clean_password1(self):
         password = self.cleaned_data.get("password")
@@ -55,15 +53,18 @@ class SignUpForm(forms.Form):
             raise forms.ValidationError("Password confirmation does not match")
         else:
             return password
-    
-    def save(self):
-        first_name = self.cleaned_data.get("first_name")
-        last_name = self.cleaned_data.get("last_name")
+
+    #장고 공식문서 modelform 참고 commit=False는 object는 생성하지만 database에 올리지 말라는 뜻
+    #그냥 modelform 사용하고 admin으로 확인해보면 username 칸이 비어있음 그래서 save 함수를 
+    # 조금 수정해서 username 이랑 password 구해주는 거임
+    def save(self, *args, **kwargs):
+        user = super().save(commit=False)
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
-
-        user = models.User.objects.create_user(email, email, password)  #각각 username, email, password 인자임
-        user.first_name = first_name
-        user.last_name = last_name
+        user.username = email
+        user.set_password(password)
         user.save()
+    
+    
+        
 
