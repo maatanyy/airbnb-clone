@@ -185,4 +185,6 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     FormView이용해서 로그인 쉽게 만들수있다
      https://ccbv.co.uk/projects/Django/4.0/django.views.generic.edit/FormView/ 및 장고 문서 loginview 참고
 
+#2022-01-29
+
  
