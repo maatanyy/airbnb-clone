@@ -87,44 +87,44 @@ def github_login(request):  #유저가 깃허브 로그인을 누르면 일어�
     return redirect(f"https://github.com/login/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&scope=read:user") 
     #redirect에서 요구하는 필수항목은 채워줘야한다. scope에 뭐가있나 더 찾아보자
 
+
+class GithubException(Exception): #에러가 날경우 return redirect가 아닌 raise exception하고 error담당하게함 이게 더 코드가 깔끔하다
+    pass
+
+
 def github_callback(request): #유저가 깃헙으로 이동한 싸이트에서 accept를 클릭할 경우@@@@@@ 
-    client_id = os.environ.get("GH_ID")
-    client_secret = os.environ.get("GH_SECRET")
-    code = request.GET.get("code", None)
-    if code is not None:
-        result = requests.post(  #code를 가지고 token을 access하기위해서 또다른 requsest를 보냄@@@@@
-            f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
-            headers={"Accept": "application/json"},  #그러면 이 줄에 의해서 우리에게 json을 준다@@@@@
-        )
-        result_json = result.json()   #json에 에러가 없나 확인하는과정@@@@@@@@
-        error = result_json.get("error", None)
-        if error is not None:         #에러가 있다면@@@@@@@@@
-            return redirect(reverse("users:login"))
-        else:       #만약 에러가없다면 그 json에서 token을 가져온다@@@@@@
-            access_token = result_json.get("access_token")
-            profile_request = api_request = requests.get( #이 토큰을 가지고 github api에 access한다@@@@@@
-                "https://api.github.com/user", 
-                headers={
-                "Authorization": f"token {access_token}",  #headers에서 token을 보내고@@@@
-                "Accept": "application/json",
-                },
+    try:
+        client_id = os.environ.get("GH_ID")
+        client_secret = os.environ.get("GH_SECRET")
+        code = request.GET.get("code", None)
+        if code is not None:
+            result = requests.post(  #code를 가지고 token을 access하기위해서 또다른 requsest를 보냄@@@@@
+                f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
+                headers={"Accept": "application/json"},  #그러면 이 줄에 의해서 우리에게 json을 준다@@@@@
             )
-            profile_json = api_request.json()  #profile_json을 받는다@@@@
-            username = profile_json.get('login', None)   #json안에 username이 있으면 문제없다는 뜻,,이걸 확인하는 과정
-            if username is not None:
-                name = profile_json.get('name')
-                email = profile_json.get('email')
-                bio = profile_json.get('bio')
-                user = models.User.objects.get(email=email)  #이 email을 가진 유저가 있다면
-                if user is not None:
-                    return redirect(reverse("users:login"))
+            result_json = result.json()   #json에 에러가 없나 확인하는과정@@@@@@@@
+            error = result_json.get("error", None)
+            if error is not None:         #에러가 있다면@@@@@@@@@
+                raise GithubException()
+            else:       #만약 에러가없다면 그 json에서 token을 가져온다@@@@@@
+                access_token = result_json.get("access_token")
+                profile_request = api_request = requests.get( #이 토큰을 가지고 github api에 access한다@@@@@@
+                    "https://api.github.com/user", 
+                    headers={
+                    "Authorization": f"token {access_token}",  #headers에서 token을 보내고@@@@
+                    "Accept": "application/json",
+                    },
+                )
+                profile_json = api_request.json()   #profile_json을 받는다@@@@
+                username = profile_json.get('login', None)      #json안에 username이 있으면 문제없다는 뜻,,이걸 확인하는 과정
+                if username is not None:
+                    name = profile_json.get('name')
+                    email = profile_json.get('email')
+                    bio = profile_json.get('bio')
+                    user = models.User.objects.get(email=email)  #이 email을 가진 유저가 있다면
                 else:
-                    user = models.User.objects.create(
-                        username=email, first_name=name, bio=bio, email=email
-                        )
-                    login(request, user)
-                    return redirect(reverse("core:home"))
-            else:
-                return redirect(reverse("users:login"))  #위에 username에러있는 경우 즉 문제있으니 users:login으로 보내줌
-    else:
-        return redirect(reverse("core:home"))
+                    raise GithubException()
+        else:
+            raise GithubException()
+    except GithubException:
+        return redirect(reverse("user:login"))
