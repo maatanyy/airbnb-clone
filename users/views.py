@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
 from . import forms, models
 import os
+import requests
 # Create your views here.
 
 # 로그인 어려운 방법
@@ -87,4 +88,15 @@ def github_login(request):
     #redirect에서 요구하는 필수항목은 채워줘야한다. scope에 뭐가있나 더 찾아보자
 
 def github_callback(request):
-    pass
+    client_id = os.environ.get("GH_ID")
+    client_secret = os.environ.get("GH_SECRET")
+    code = request.GET.get("code", None)
+    if code is not None:
+        request = requests.post(
+            f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
+            headers={"Accept": "application/json"},
+        )
+        print(request.json())
+        #github에 request를 보내서 token을 얻는거임
+    else:
+        return redirect(reverse("core:home"))

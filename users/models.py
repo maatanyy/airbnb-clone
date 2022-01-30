@@ -1,5 +1,6 @@
 import email
 import os
+from random import choice
 import uuid  #이메일에서 검증번호 보내기위해 추가
 from django.conf import settings  #send_mail 함수 인자에서 사용하기위해 추가
 from django.core.mail import send_mail
@@ -39,6 +40,12 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
+    LOGIN_EMAIL = "email"
+    LOGIN_GITHUB = "github"
+    LOGIN_KAKAO = "kakao"
+
+    LOGIN_CHOICES = ((LOGIN_EMAIL, "Email"), (LOGIN_GITHUB, "Github"), (LOGIN_KAKAO, "Kakao"))
+
     avatar = models.ImageField(
         upload_to="avatars", blank=True
     )  # null은 database에서 blank는 form에서
@@ -55,6 +62,8 @@ class User(AbstractUser):
     
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
+
+    login_method = models.CharField(max_length=50, choices = LOGIN_CHOICES, default= LOGIN_EMAIL)
 
     def verify_email(self):
         if self.email_verified is False:   #만약 이메일이 검증되었다면 아무것도 하지 않는다
