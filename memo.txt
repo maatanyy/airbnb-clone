@@ -199,6 +199,8 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
     EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
     요런식으로 접근하게 설정해둔다
+    OAuth이용해서 이제 깃헙,카카오 로그인 만든다
+    
 
 
 
