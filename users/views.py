@@ -55,10 +55,10 @@ class SignUpView(FormView):
         'first_name': "Min Sung",
         'last_name': "Noh",
         'email': "min@naver.com",
-    }
+    }   
 
     def form_valid(self, form):
-        form.save()   #저장 
+        form.save()   
         email = form.cleaned_data.get("email")   #저장후 자동 로그인 
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)

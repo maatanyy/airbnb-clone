@@ -156,6 +156,6 @@ MEDIA_URL = "/media/"
 #다만 이대로 깃에 올리면 비밀번호가 올라가니까 올리면 안됨
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = "587"
-print(os.environ.get("MAILGUN_PASSWORD"))
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+EMAIL_FROM = "airbnb@sandbox18a38b6eca434a1881290fdb26fb26c7.mailgun.org"  #도메인은 수정하면 안됨

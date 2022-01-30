@@ -1,4 +1,11 @@
+import email
+import os
+import uuid  #이메일에서 검증번호 보내기위해 추가
+from django.conf import settings  #send_mail 함수 인자에서 사용하기위해 추가
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
 from statistics import mode
+from django.template.loader import render_to_string   #template을 load해서 연결하는 역할
 from django.contrib.auth.models import AbstractUser
 
 # class User에서 model.model이 필요없고 다른걸 상속하기위해 이걸추가했다
@@ -46,8 +53,23 @@ class User(AbstractUser):
 
     superhost = models.BooleanField(default=False)
     
-    email_confirmed = models.BooleanField(default=False)
-    email_secret = models.CharField(max_length=120, default="", blank=True)
+    email_verified = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=20, default="", blank=True)
 
     def verify_email(self):
-        pass
+        if self.email_verified is False:   #만약 이메일이 검증되었다면 아무것도 하지 않는다
+            secret = uuid.uuid4().hex[:20]
+            self.email_secret = secret
+            html_message = render_to_string("emails/verify_email.html",{'secret':secret}) #html_message로 메시지 묶고  
+            #render_to_string을 사용해서 묶는 방법을 사용하면 css도 적용할수있고 좋다 해보니까 이거 개꿀인듯 
+            send_mail(
+                "Verify Airbnb Account",
+                strip_tags(html_message),    #strip_tags이용해서 묶음
+                settings.EMAIL_FROM, 
+                [self.email], 
+                fail_silently=False,
+                html_message= html_message,
+            )
+        return
+
+
