@@ -1,7 +1,9 @@
+from statistics import mode
 from django.contrib.auth.models import AbstractUser
 
 # class User에서 model.model이 필요없고 다른걸 상속하기위해 이걸추가했다
 from django.db import models
+from django.forms import EmailInput
 
 # Create your models here.
 
@@ -43,3 +45,9 @@ class User(AbstractUser):
     currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True , default=CURRENCY_KRW)
 
     superhost = models.BooleanField(default=False)
+    
+    email_confirmed = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=120, default="", blank=True)
+
+    def verify_email(self):
+        pass

@@ -3,6 +3,8 @@
 import os
 import sys
 
+import dotenv  #dotenv 쓰기 위해 import
+
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +21,5 @@ def main():
 
 
 if __name__ == "__main__":
+    dotenv.read_dotenv()   #main함수 실행되기전에 이거 추가
     main()

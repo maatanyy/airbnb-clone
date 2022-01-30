@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -148,3 +149,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_ROOT = BASE_DIR / "uploads"  # 이걸 추가해주면 이미지가 여기로 저장됨 uploads!!
 
 MEDIA_URL = "/media/"
+
+
+# Email Configuration
+# maligun 가입하고 sending-> domain settingss-> SMTP credentials -> add new SMTP user해서 password구함
+#다만 이대로 깃에 올리면 비밀번호가 올라가니까 올리면 안됨
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+print(os.environ.get("MAILGUN_PASSWORD"))
+EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
