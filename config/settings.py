@@ -139,6 +139,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -146,7 +148,8 @@ AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_ROOT = BASE_DIR / "uploads"  # 이걸 추가해주면 이미지가 여기로 저장됨 uploads!!
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+#BASE_DIR / "uploads"  # 이걸 추가해주면 이미지가 여기로 저장됨 uploads!!
 
 MEDIA_URL = "/media/"
 
