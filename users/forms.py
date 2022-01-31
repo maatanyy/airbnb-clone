@@ -1,6 +1,6 @@
 from django import forms
 from . import models
-
+from django.contrib.auth import password_validation
 
 class LoginForm(forms.Form):
 
@@ -64,7 +64,17 @@ class SignUpForm(forms.ModelForm):
         user.username = email
         user.set_password(password)
         user.save()
-    
+
+#이 부분 빼야할수도
+    def _post_clean(self):
+        super()._post_clean()
+
+        password = self.cleaned_data.get("password1")
+        if password:
+            try:
+                password_validation.validate_password(password, self.instance)
+            except forms.ValidationError as error:
+                self.add_error("password1", error) 
     
         
 

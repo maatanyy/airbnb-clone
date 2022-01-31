@@ -203,6 +203,10 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     github settings -> developer settings 
     requests library 다운 말그대로 request.get request.post 등에 사용
 
+#2022-01-31
+    from django.core.files.base import ContentFile 사용 (photo 가져오기에)
+    
+
 
 
  

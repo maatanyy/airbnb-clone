@@ -54,22 +54,22 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)  # default or null
     birthdate = models.DateField(blank=True, null=True)
 
-    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, blank=True , default=LANGUAGE_KOREAN)
+    language = models.CharField(choices=LANGUAGE_CHOICES, max_length=2, blank=True, default=LANGUAGE_KOREAN)
 
-    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True , default=CURRENCY_KRW)
+    currency = models.CharField(choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_KRW)
 
     superhost = models.BooleanField(default=False)
     
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
 
-    login_method = models.CharField(max_length=50, choices = LOGIN_CHOICES, default= LOGIN_EMAIL)
+    login_method = models.CharField(max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
 
     def verify_email(self):
         if self.email_verified is False:   #만약 이메일이 검증되었다면 아무것도 하지 않는다
             secret = uuid.uuid4().hex[:20]
             self.email_secret = secret
-            html_message = render_to_string("emails/verify_email.html",{'secret':secret}) #html_message로 메시지 묶고  
+            html_message = render_to_string("emails/verify_email.html", {'secret': secret}) #html_message로 메시지 묶고  
             #render_to_string을 사용해서 묶는 방법을 사용하면 css도 적용할수있고 좋다 해보니까 이거 개꿀인듯 
             send_mail(
                 "Verify Airbnb Account",
@@ -77,7 +77,7 @@ class User(AbstractUser):
                 settings.EMAIL_FROM, 
                 [self.email], 
                 fail_silently=False,
-                html_message= html_message,
+                html_message=html_message,
             )
             self.save()
         return
