@@ -205,6 +205,11 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
 
 #2022-01-31
     from django.core.files.base import ContentFile 사용 (photo 가져오기에)
+    sign email error 못고치겠다;;;
+    일단 디자인 시작
+    tailwind css 사용!! built with tailwind 검색해보자
+    assets는 프로그래머를 위한거 static은 브라우저를 위한 것
+    style.scss를 style.css에 반영하고 싶다면 npm run css명령어 실행
     
 
 

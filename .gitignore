@@ -140,3 +140,5 @@ cython_debug/
 
 #image
 uploads/
+
+node_modules/
