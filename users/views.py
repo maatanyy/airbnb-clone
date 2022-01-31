@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
 from . import forms, models
+from django.core.files.base import ContentFile
 import os
 import requests
 # Create your views here.
@@ -203,6 +204,11 @@ def kakao_callback(request):
             )
             user.set_unusable_password()
             user.save()
+            if profile_image_url is not None:
+                photo_request = requests.get(profile_image_url)
+                user.avatar.save(
+                    f"{nickname}-avatar", ContentFile(photo_request.content)
+                )
             login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
