@@ -211,6 +211,9 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     assets는 프로그래머를 위한거 static은 브라우저를 위한 것
     style.scss를 style.css에 반영하고 싶다면 npm run css명령어 실행
     
+#2022-02-01
+    css 시작 rem 과 % 가 있다.
+    rem = root em을 의미  (em 가장 가까운 font-size와 같다 rem은 가장 가까운 font-size와 상관없음 -> root-font-size와 관련있음)
 
 
 
