@@ -1,8 +1,10 @@
-<ul class="flex items-center text-sm font-semibold">
+<ul class="flex items-center text-sm font-semibold h-full">
     {% if user.is_authenticated %}
-        <li class="ml-8"><a href="{% url 'users:logout' %}">Log out</a></li>
+        <li class="nav_link"><a href="{% url 'users:logout' %}">Log out</a></li>
     {% else %}
-        <li class="ml-8"><a href="{% url 'users:login' %}">Log in</a></li>
-        <li class="ml-8"><a href="{% url 'users:signup' %}">Sign up</a></li>
+        <li class="nav_link"><a href="{% url 'users:login' %}">Log in</a></li>
+        <li class="nav_link"><a href="{% url 'users:signup' %}">Sign up</a></li>
+        <!--링크에 py-10 을 하는 이유는 글자 위아래 여백을 클릭해도 링크가 작동하게 하기 위해서-->
+        <!--h-full을 통해 전체공간쓰게하고 items-center을 통해 가운데로 위치시킨다 지금 이걸다 styles로 옮겼음-->
     {% endif %}
 </ul>
