@@ -215,6 +215,10 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     css 시작 rem 과 % 가 있다.
     rem = root em을 의미  (em 가장 가까운 font-size와 같다 rem은 가장 가까운 font-size와 상관없음 -> root-font-size와 관련있음)
 
-
+#2022-02-02
+    css작업을 위한 각종 seed를 내가 삭제해서 다시 만들어야해서 장고 seed 복습 (#9.0 ~ #9.8)    
+    아무 app안에 management 폴더 만들고 __init__.py 만듬
+    command도 만들고 그안에도  __init__.py 만듬 (구조는 참조해서보자)
+    .py 만들고 BaseCommand import 하고 def add_arguments def handle 추가하고 이거 만들면 된다
 
  
