@@ -224,3 +224,5 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
 #2022-02-03
     css 확장가능. tailwind.config.js 파일에서 작업해서 확장
     사진 가져올때 unsplash.com 개꿀이다여기 room_html에서 적용하는 코드 보면 됨
+    truncate 하면 아래로 안내려가고 한줄로함
+    overflow-hidden 하면 옆으로 침범안하고 그 칸에서끝

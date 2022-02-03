@@ -7,30 +7,35 @@ Home
 {% block content %}
 
     
-    <div class="container mx-auto">
+    <div class="container mx-auto pb-10">
 
-        <div class="bg-gray-800 h-50vh mt-32 mb-24 -mx-40 rounded-xl bg-cover bg-center" style="background-image:url(https://media.istockphoto.com/photos/seoul-south-korea-skyline-picture-id521707831?b=1&k=20&m=521707831&s=170667a&w=0&h=IW-PqLm_R4Khy3fS7XO8cnQ8E_pQMW1WHo3tLGpqeeo=)">
+        <div class="bg-gray-800 h-50vh mt-32 mb-24 -mx-50 rounded-xl bg-cover bg-center" style="background-image:url(https://media.istockphoto.com/photos/seoul-south-korea-skyline-picture-id521707831?b=1&k=20&m=521707831&s=170667a&w=0&h=IW-PqLm_R4Khy3fS7XO8cnQ8E_pQMW1WHo3tLGpqeeo=)">
             <!-- style에 사진 입력하고 bg-cover bg-center 통해서 조절-->
         </div>
 
-        <div class="flex flex-wrap -mx-40">
-        {% for room in rooms %}
-            {% include 'partials/room_card.html' with room=room %}
-        {% endfor %}
+        <div class="flex flex-wrap -mx-50 mb-10">
+            {% for room in rooms %}
+                {% include 'partials/room_card.html' with room=room %}
+            {% endfor %}
         </div>
 
-        <h5>
+        <div class="flex items-center justify-center mx-auto container">
             {% if page_obj.has_previous %}
-                <a href="?page={{page_obj.previos_page_number}}">Previous</a>
+                <a href="?page={{page_obj.previos_page_number}}" class="text-teal-500">
+                    <i class="fas fa-arrow-left fa-lg"></i>  <!--fa는 테일윈드에서 온게아니라 font awesome에서 온거다-->
+                </a>
             {% endif %}
 
             <!--page + 1 로 접근하였으나 지원하지않음 따라서 장고필터중 하나인 add사용!-->
-            Page{{page_obj.number}} of {{page_obj.paginator.num_pages}}
+            <span class="mx-3 font-medium text-lg">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+
             {% if page_obj.has_next %}
-                <a href="?page={{page_obj.next_page_number}}">Next</a>
+                <a href="?page={{page_obj.next_page_number}}" class="text-teal-500">
+                    <i class="fas fa-arrow-right fa-lg"></i>
+                </a>
             {% endif %}
 
-        </h5>
+        </div>
     </div>
 
     {% endblock content %}
