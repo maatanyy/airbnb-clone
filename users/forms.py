@@ -1,11 +1,12 @@
+from tkinter.ttk import Widget
 from django import forms
 from . import models
 from django.contrib.auth import password_validation
 
 class LoginForm(forms.Form):
 
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)  #이렇게 하면 입력하면 점으로 나와서 보호됨
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))  #이렇게 하면 입력하면 점으로 나와서 보호됨
 
     #def clean_email(self):  #이름 임의로 지은거 아님 clean이 있어야함 검사할 때 
     #    email = self.cleaned_data.get("email")
@@ -37,12 +38,18 @@ class SignUpForm(forms.ModelForm):
         model = models.User
         fields = ("first_name", "last_name", "email",)
 
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': "First name"}),
+            'last_name': forms.TextInput(attrs={'placeholder': "Last name"}),
+            'email': forms.EmailInput(attrs={'placeholder': "Email"}),
+        }
+
     #모델 폼 사용 전 사용하던 거임
     #first_name = forms.CharField(max_length=80)
     #last_name = forms.CharField(max_length=80)
     #email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    password1 = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': "Password"}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': "Confirm Password"}))
 
     
     def clean_password1(self):
