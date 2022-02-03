@@ -1,3 +1,5 @@
+import os
+import requests
 from django.views import View
 from django.views.generic import FormView  #로그인 쉽게하는 방법 쓰기위해 FormView추가
 from django.urls import reverse_lazy
@@ -5,8 +7,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
 from . import forms, models
 from django.core.files.base import ContentFile
-import os
-import requests
+
 # Create your views here.
 
 # 로그인 어려운 방법
@@ -55,8 +56,8 @@ class SignUpView(FormView):
     success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
-        form.save()   
-        email = form.cleaned_data.get("email")   #저장후 자동 로그인 
+        form.save()  
+        email = form.cleaned_data.get("email")   
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
