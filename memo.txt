@@ -221,4 +221,6 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     command도 만들고 그안에도  __init__.py 만듬 (구조는 참조해서보자)
     .py 만들고 BaseCommand import 하고 def add_arguments def handle 추가하고 이거 만들면 된다
 
- 
+#2022-02-03
+    css 확장가능. tailwind.config.js 파일에서 작업해서 확장
+    사진 가져올때 unsplash.com 개꿀이다여기 room_html에서 적용하는 코드 보면 됨
