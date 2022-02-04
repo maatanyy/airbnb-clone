@@ -6,6 +6,7 @@ from django.conf import settings  #send_mail 함수 인자에서 사용하기위
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from statistics import mode
+from django.shortcuts import reverse
 from django.template.loader import render_to_string   #template을 load해서 연결하는 역할
 from django.contrib.auth.models import AbstractUser
 
@@ -64,6 +65,11 @@ class User(AbstractUser):
     email_secret = models.CharField(max_length=20, default="", blank=True)
 
     login_method = models.CharField(max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL)
+
+
+    def get_absolute_url(self):    #get_absolute_url을 통해 admin에서 각 객체를 확인할 수 있고 url을 대신해서 쓸 수도 있음 nav.html에서 확인
+        return reverse('users:profile', kwargs={'pk': self.pk})
+
 
     def verify_email(self):
         if self.email_verified is False:   #만약 이메일이 검증되었다면 아무것도 하지 않는다

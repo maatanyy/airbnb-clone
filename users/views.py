@@ -1,7 +1,7 @@
 import os
 import requests
 from django.views import View
-from django.views.generic import FormView  #로그인 쉽게하는 방법 쓰기위해 FormView추가
+from django.views.generic import FormView, DetailView  #로그인 쉽게하는 방법 쓰기위해 FormView추가
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
@@ -213,5 +213,11 @@ def kakao_callback(request):
     except KakaoException as e:
         messages.error(request, e)
         return redirect(reverse("users:login"))
+
+class UserProfileView(DetailView):
+    
+    model = models.User
+    context_object_name = "user_obj"  #이걸 바꾼이유를 생각해보자 이걸 바꾸면 user_obj (상세페이지 주인의 정보얻음)
+
 
 

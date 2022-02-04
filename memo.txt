@@ -232,3 +232,9 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     메시지 추가 장고 문서 message framework검색
     animation: messageFadeIn 5s ease-in-out forwards; 에서 ease-in-out은 애니메이션에서 느리게 시작 중간에 가장 빨라지고 다시 느려짐
     forwards 는 마지막 값을 기억하게 함 여기서 opacity가 0 -> 1 -> 0 으로 변하는데 이 0 값을 계속 기억하게함
+    detailview에서 profile을 누르면 로그인한 사람이 아니라 디테일페이지 주인의 profile로 가게됨,,
+    이것은 detailview에서 user를 받을 때 로그인한 유저가 아니라 방의 유저를 받기 때문 따라서
+    @@@@ DetailView에서 타고 들어가다보면 SingleObjectMixin 이라는게 있는데 여기를 잘보면
+    context_object_name = None 라는게 있고 이 코드가 로그인 했던 유저가 아니라 뷰에서 찾았던 유저 객체를 가르키는 방법을 바꿀수 있게 한다
+    
+    
