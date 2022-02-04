@@ -103,7 +103,7 @@ def github_callback(request):  #유저가 깃헙으로 이동한 싸이트에서
             token_json = token_request.json()   #json에 에러가 없나 확인하는과정@@@@@@@@
             error = token_json.get("error", None)
             if error is not None:         #에러가 있다면@@@@@@@@@
-                raise GithubException()
+                raise GithubException("Can't get access token")
             else:       #만약 에러가없다면 그 json에서 token을 가져온다@@@@@@
                 access_token = token_json.get("access_token")
                 profile_request = api_request = requests.get( #이 토큰을 가지고 github api에 access한다@@@@@@
@@ -126,7 +126,7 @@ def github_callback(request):  #유저가 깃헙으로 이동한 싸이트에서
                     try:
                         user = models.User.objects.get(email=email)  
                         if user.login_method != models.User.LOGIN_GITHUB:
-                            raise GithubException()
+                            raise GithubException(f"Please log in with: {user.login_method}")
                     except models.User.DoesNotExist:
                         user = models.User.objects.create(
                             email=email, 
@@ -139,13 +139,14 @@ def github_callback(request):  #유저가 깃헙으로 이동한 싸이트에서
                         user.set_unusable_password()
                         user.save()
                     login(request, user)
+                    messages.success(request, f"Welcome back {user.first_name}")
                     return redirect(reverse("core:home"))
                 else:
-                    raise GithubException()
+                    raise GithubException("Can't get your profile.")
         else:
-            raise GithubException()
-    except GithubException:
-        #send error message
+            raise GithubException("Can't get code.")
+    except GithubException as e:
+        messages.error(request, e)
         return redirect(reverse("user:login"))
 
 
@@ -164,7 +165,6 @@ class KakaoException(Exception):
 def kakao_callback(request):
     try:
         code = request.GET.get("code")
-        raise KakaoException()
         client_id = os.environ.get("KAKAO_ID")
         redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
         token_request = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"
@@ -172,7 +172,7 @@ def kakao_callback(request):
         token_json = token_request.json()
         error = token_json.get("error", None)
         if error is not None:
-            raise KakaoException()
+            raise KakaoException("Can't get authorzation code.")
         access_token = token_json.get("access_token")
         profile_request = requests.get(
         "https://kapi.kakao.com/v2/user/me",
@@ -182,16 +182,16 @@ def kakao_callback(request):
         profile_json = profile_request.json()
         gender = profile_json.get("gender")
         kakao_account = profile_json.get("kakao_account")
-        email = kakao_account["email"]
+        email = kakao_account["email"]  #카카오톡 로그인할려고 할 때 이메일 제공안하면 이 에러 발생
         if email is None:
-            raise KakaoException()
+            raise KakaoException("Please give an eamil.")
         profile = kakao_account["profile"]
         nickname = profile["nickname"]
         profile_image_url = profile['profile_image_url']
         try:
             user = models.User.objects.get(email=email)
             if user.login_method != models.User.LOGIN_KAKAO:
-                raise KakaoException()
+                raise KakaoException(f"please log in with: {user.login_method}")
         except models.User.DoesNotExist:
             user = models.User.objects.create(
                 email=email,
@@ -208,9 +208,11 @@ def kakao_callback(request):
                     f"{nickname}-avatar", ContentFile(photo_request.content)
                 )
             login(request, user)
+            messages.success(request, f"Welcome back {user.first_name}")
+           
         return redirect(reverse("core:home"))
-    except KakaoException:
-        messages.error(request, "Hello")
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
 
 
