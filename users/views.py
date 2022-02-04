@@ -47,6 +47,7 @@ class LoginView(FormView):
 
     
 def log_out(request):
+    messages.info(request,"See you later")
     logout(request)
     return redirect(reverse("core:home"))
 
@@ -180,7 +181,6 @@ def kakao_callback(request):
         )
 
         profile_json = profile_request.json()
-        gender = profile_json.get("gender")
         kakao_account = profile_json.get("kakao_account")
         email = kakao_account["email"]  #카카오톡 로그인할려고 할 때 이메일 제공안하면 이 에러 발생
         if email is None:
@@ -209,7 +209,6 @@ def kakao_callback(request):
                 )
             login(request, user)
             messages.success(request, f"Welcome back {user.first_name}")
-           
         return redirect(reverse("core:home"))
     except KakaoException as e:
         messages.error(request, e)

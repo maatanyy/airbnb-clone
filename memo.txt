@@ -230,4 +230,5 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
 
 #2022-02-04
     메시지 추가 장고 문서 message framework검색
-    
+    animation: messageFadeIn 5s ease-in-out forwards; 에서 ease-in-out은 애니메이션에서 느리게 시작 중간에 가장 빨라지고 다시 느려짐
+    forwards 는 마지막 값을 기억하게 함 여기서 opacity가 0 -> 1 -> 0 으로 변하는데 이 0 값을 계속 기억하게함
