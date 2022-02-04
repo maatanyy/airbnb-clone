@@ -227,3 +227,7 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     truncate 하면 아래로 안내려가고 한줄로함
     overflow-hidden 하면 옆으로 침범안하고 그 칸에서끝
     메일건 sending overview 에 email-address등록하고 인증하고 이걸로 회원가입하니 오류안뜬다!
+
+#2022-02-04
+    메시지 추가 장고 문서 message framework검색
+    

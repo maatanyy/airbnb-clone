@@ -32,6 +32,8 @@
     </header>
     {% block content %}{% endblock %}
 
+
+    {% include 'partials/messages.html' %}  <!--이거 추가하고 바로 뭐가 일어나지는 않음  view건드려야함-->
     {% include "partials/footer.html" %}
 </body>
 

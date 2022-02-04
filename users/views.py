@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
 from . import forms, models
 from django.core.files.base import ContentFile
+from django.contrib import messages
 
 # Create your views here.
 
@@ -163,6 +164,7 @@ class KakaoException(Exception):
 def kakao_callback(request):
     try:
         code = request.GET.get("code")
+        raise KakaoException()
         client_id = os.environ.get("KAKAO_ID")
         redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
         token_request = requests.get(f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"
@@ -208,6 +210,7 @@ def kakao_callback(request):
             login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
+        messages.error(request, "Hello")
         return redirect(reverse("users:login"))
 
 
