@@ -1,7 +1,9 @@
+from dataclasses import field
 import os
+from re import template
 import requests
 from django.views import View
-from django.views.generic import FormView, DetailView  #로그인 쉽게하는 방법 쓰기위해 FormView추가
+from django.views.generic import FormView, DetailView, UpdateView #로그인 쉽게하는 방법 쓰기위해 FormView추가
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
@@ -218,6 +220,26 @@ class UserProfileView(DetailView):
     
     model = models.User
     context_object_name = "user_obj"  #이걸 바꾼이유를 생각해보자 이걸 바꾸면 user_obj (상세페이지 주인의 정보얻음)
+
+
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "bio",
+        "birthdate",
+        "language",
+        "currency",
+    )   
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 
 
 
