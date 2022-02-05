@@ -13,9 +13,11 @@
         <!-- lg, md, xl등을 통해 반응형 만들기 가능 말그대로 라지, 미디움, 엑스라지임-->
         
         {% include 'mixins/auth/auth_form.html' with form=form cta="Update Profile" %}
-
-        <div class="mt-5">
-            <a href="{% url 'users:signup' %}" class="text-teal-500 font-medium">Change Password</a>
+        <!--mx-auto my-10 flex flex-col items-center border-->
+        {% if object.login_method == "email" %}
+        <div class="mt-5 text-center">
+            <a href="{% url 'users:password' %}" class="text-teal-500 font-medium">Change Password</a>
         </div>
+        {% endif %}
     </div>
 {% endblock content %}

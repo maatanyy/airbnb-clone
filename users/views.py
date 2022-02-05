@@ -4,6 +4,7 @@ from re import template
 import requests
 from django.views import View
 from django.views.generic import FormView, DetailView, UpdateView #로그인 쉽게하는 방법 쓰기위해 FormView추가
+from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout  #추가
@@ -229,7 +230,6 @@ class UpdateProfileView(UpdateView):
     fields = (
         "first_name",
         "last_name",
-        "avatar",
         "gender",
         "bio",
         "birthdate",
@@ -239,6 +239,10 @@ class UpdateProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+class UpdatePasswordView(PasswordChangeView):
+
+    template_name = "users/update-password.html"
 
 
 
