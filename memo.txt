@@ -244,3 +244,6 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     https://ccbv.co.uk/projects/Django/4.0/django.contrib.auth.views/PasswordChangeView/ 문서 참고
     우리가 하는건 이제 바꿀 때 떡하니 빈칸만 있어서 label을 달아줄려고하는데 form class를 만들어서 하는 방법과
     문서에 있는 get_form을 이용하는 방법이있다
+    SuccessMessageMixin을 이용하여 성공시(여기서는 프로필 수정) 메시지가 나오게 할 수 있다.
+    Users 안에 mixins.py를 만들었다. url을 알아도 이동못하게 하기위해 (악용될경우대비)
+
