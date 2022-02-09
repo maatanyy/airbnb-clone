@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.shortcuts import redirect, reverse
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 class LoggedOutOnlyView(UserPassesTestMixin):
 
@@ -12,4 +14,18 @@ class LoggedOutOnlyView(UserPassesTestMixin):
 # true는 유저의 인증이 되지 않았다는 것을 의미한다 (즉 익명의 유저)
 
     def handle_no_permission(self):
+        messages.error(self.request, "Can't go there")
+        return redirect("core:home")
+
+
+class LoggedInOnlyView(LoginRequiredMixin):
+    login_url = reverse_lazy("users:login")
+
+class EmailLoginOnlyView(UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.login_method == "email"
+
+    def handle_no_permission(self):
+        messages.error(self.request, "Can't go there")
         return redirect("core:home")

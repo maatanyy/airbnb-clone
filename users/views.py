@@ -39,7 +39,7 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
-    success_url = reverse_lazy("core:home")  # 이거때문에 reverse_lazy추가 ,form 가져올 때 url이 아직 불려지지 않아서 문제임
+    #success_url = reverse_lazy("core:home")  # 이거때문에 reverse_lazy추가 ,form 가져올 때 url이 아직 불려지지 않아서 문제임
     
     # https://ccbv.co.uk/projects/Django/4.0/django.views.generic.edit/FormView/ 참고!!!!
     def form_valid(self, form):
@@ -50,7 +50,13 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
             login(self.request, user)
         return super().form_valid(form)
 
-    
+    def get_success_url(self):
+        next_arg = self.request.GET.get("next")
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse("core:home")
+
 def log_out(request):
     messages.info(request,"See you later")
     logout(request)
@@ -225,7 +231,7 @@ class UserProfileView(DetailView):
     context_object_name = "user_obj"  #이걸 바꾼이유를 생각해보자 이걸 바꾸면 user_obj (상세페이지 주인의 정보얻음)
 
 
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView ,SuccessMessageMixin, UpdateView):
 
     model = models.User
     template_name = "users/update-profile.html"
@@ -254,7 +260,7 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         form.fields["currency"].widget.attrs = {"placeholder": "Currency"}
         return form
 
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UpdatePasswordView(mixins.EmailLoginOnlyView, mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView):
 
     template_name = "users/update-password.html"
     success_message = "Password Updated"
