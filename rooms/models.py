@@ -119,3 +119,7 @@ class Room(core_models.TimeStampedModel):
     def first_photo(self):
         photo, = self.photos.all()[:1]  #photo에 컴마적으므로써 self.photos.all()[:1]은 쿼리셋인데 첫번째를 포토에 저장
         return photo.file.url
+
+    def get_next_four_photos(self):
+        photos = self.photos.all()[1:5]
+        return photos
