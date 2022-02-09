@@ -247,3 +247,9 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     SuccessMessageMixin을 이용하여 성공시(여기서는 프로필 수정) 메시지가 나오게 할 수 있다.
     Users 안에 mixins.py를 만들었다. url을 알아도 이동못하게 하기위해 (악용될경우대비)
 
+#2022-02-09
+    mixin 마무리 room 시작
+    복수/단수 (bed/beds) 해결위해 pluralize라는게 있다
+    ul태그 추가시 테일윈드가 각 점을 없애줌
+    
+
