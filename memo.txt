@@ -251,5 +251,7 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     mixin 마무리 room 시작
     복수/단수 (bed/beds) 해결위해 pluralize라는게 있다
     ul태그 추가시 테일윈드가 각 점을 없애줌
+    user_avatar의 h_and_w 로 default를 주고 부를 때 값 지정해주는 부분 좋은 스킬인듯
+    
     
 
