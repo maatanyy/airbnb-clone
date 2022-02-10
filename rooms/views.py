@@ -1,7 +1,8 @@
+from dataclasses import field
 from math import ceil
 from django.core import paginator  # 올림함수 import
 from django.core.paginator import EmptyPage, Paginator
-from django.views.generic import ListView, DetailView, View  # ListView 사용하기 위해 추가
+from django.views.generic import ListView, DetailView, View, UpdateView  # ListView 사용하기 위해 추가
 from . import models, forms
 from django.shortcuts import render
 from django_countries import countries
@@ -115,6 +116,30 @@ class SearchView(View):
 
         
         return render(request,"rooms/search.html", {"form": form })
+
+class EditRoomView(UpdateView):
+
+    model = models.Room
+    template_name = "rooms/room_edit.html"
+    fields = (
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+    )
 
 
 
