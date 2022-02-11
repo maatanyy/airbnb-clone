@@ -7,6 +7,8 @@ from . import models, forms
 from django.shortcuts import render
 from django_countries import countries
 from django.core.paginator import Paginator
+from users import mixins as user_mixins
+from django.http import Http404
 
 # from django.http import Http404
 # from django.shortcuts import render
@@ -117,7 +119,7 @@ class SearchView(View):
         
         return render(request,"rooms/search.html", {"form": form })
 
-class EditRoomView(UpdateView):
+class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
 
     model = models.Room
     template_name = "rooms/room_edit.html"
@@ -140,6 +142,27 @@ class EditRoomView(UpdateView):
         "facilities",
         "house_rules",
     )
+
+    def get_object(self, queryset = None):
+        room = super().get_object(queryset = queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()  #내방 아닌거 수정할라고 url로 들가면 못하게 막는 보안과정
+        return room  
+
+class RoomPhotosView(user_mixins.LoggedInOnlyView, RoomDetail):  #Room의 DetailView라고 생각
+
+    model = models.Room
+    template_name = "room_photos.html"
+
+    def get_object(self, queryset = None):
+        room = super().get_object(queryset = queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()  #내방 아닌거 수정할라고 url로 들가면 못하게 막는 보안과정
+        return room  
+
+    
+
+
 
 
 
