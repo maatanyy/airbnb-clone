@@ -152,7 +152,7 @@ class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
 class RoomPhotosView(user_mixins.LoggedInOnlyView, RoomDetail):  #Room의 DetailView라고 생각
 
     model = models.Room
-    template_name = "room_photos.html"
+    template_name = "rooms/room_photos.html"
 
     def get_object(self, queryset = None):
         room = super().get_object(queryset = queryset)
