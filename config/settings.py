@@ -162,3 +162,8 @@ EMAIL_PORT = "587"
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 EMAIL_FROM = "airbnb@sandbox18a38b6eca434a1881290fdb26fb26c7.mailgun.org"  #도메인은 수정하면 안됨
+
+
+#Auth
+
+LOGIN_URL = "/users/login/"

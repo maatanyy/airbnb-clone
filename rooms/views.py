@@ -1,14 +1,17 @@
+from ast import Expression, Try
 from dataclasses import field
 from math import ceil
 from django.core import paginator  # 올림함수 import
 from django.core.paginator import EmptyPage, Paginator
 from django.views.generic import ListView, DetailView, View, UpdateView  # ListView 사용하기 위해 추가
 from . import models, forms
-from django.shortcuts import render
+from django.shortcuts import redirect, render, reverse
 from django_countries import countries
 from django.core.paginator import Paginator
 from users import mixins as user_mixins
 from django.http import Http404
+from django.contrib.auth.decorators import login_required  #deletephoto에서 데코레이터 추가하기 위해 추가
+from django.contrib import messages
 
 # from django.http import Http404
 # from django.shortcuts import render
@@ -159,6 +162,23 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, RoomDetail):  #Room의 Detail
         if room.host.pk != self.request.user.pk:
             raise Http404()  #내방 아닌거 수정할라고 url로 들가면 못하게 막는 보안과정
         return room  
+
+
+@login_required
+def delete_photo(request, room_pk, photo_pk):
+    user = request.user
+    try:
+        room = models.Room.objects.get(pk=room_pk)
+        if room.host.pk != user.pk:
+            messages.error(request, "Can't delete that photo")
+        else:
+            #photo =models.Photo   #1번방법
+            #photo.delete()        #이렇게 해도됨
+            models.Photo.objects.filter(pk=photo_pk).delete() #필터써서 쿼리셋에서 pk=photo_pk해서 하나만 해당되게 함
+            messages.success(request,"Photo Deleted")
+        return redirect(reverse("rooms:photos", kwargs={'pk': room_pk})) 
+    except models.Room.DoesNotExist:  #방이 존재하지 않는다면 홈으로 redirect하면 됨
+        return redirect(reverse("core:home"))
 
     
 
