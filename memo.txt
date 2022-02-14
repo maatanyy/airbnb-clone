@@ -257,5 +257,5 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     CreateView를 사용하는데 Form을 새로 만들어야한다면 예를들어 사진추가 이럴경우 는 FormView를 사용
     session 사용! user_views.py 참고,, 유저 구분위해사용
     is_hosting 같은걸 다 모델에 넣으면 모델이 너무 커짐 session 이용함으로서 이런거 해결가능
-    
+    save_m2m() 을 해야 manytomany field 저장가능 (새로운 방 추가시) 근데 form.save 이후에 이걸써야함 공식문서참고
 
