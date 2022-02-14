@@ -12,6 +12,7 @@ from users import mixins as user_mixins
 from django.http import Http404
 from django.contrib.auth.decorators import login_required  #deletephoto에서 데코레이터 추가하기 위해 추가
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 # from django.http import Http404
 # from django.shortcuts import render
@@ -179,6 +180,18 @@ def delete_photo(request, room_pk, photo_pk):
         return redirect(reverse("rooms:photos", kwargs={'pk': room_pk})) 
     except models.Room.DoesNotExist:  #방이 존재하지 않는다면 홈으로 redirect하면 됨
         return redirect(reverse("core:home"))
+
+class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
+
+    model = models.Photo
+    template_name = "rooms/photo_edit.html"
+    pk_url_kwarg = "photo_pk"  #문서에 pk_url_kwarg가 있음 pk가 아닌 photo_pk를 찾게함
+    success_message = "Photo Updated"
+    fields = ("caption",) #fields는 tupple이 되게 string이믄 안댐
+
+    def get_success_url(self):
+        room_pk = self.kwargs.get("room_pk")
+        return reverse("rooms:photos", kwargs={"pk": room_pk})
 
     
 
