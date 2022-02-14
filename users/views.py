@@ -1,6 +1,6 @@
 from dataclasses import field
 import os
-from re import template
+from re import L, template
 from sre_constants import SUCCESS
 import requests
 from django.views import View
@@ -13,7 +13,7 @@ from . import forms, models, mixins
 from django.core.files.base import ContentFile
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 # 로그인 어려운 방법
@@ -276,6 +276,14 @@ class UpdatePasswordView(mixins.EmailLoginOnlyView, mixins.LoggedInOnlyView, Suc
         return self.request.user.get_absolute_url()
 
 
+#Django 공식문서 session 검색 참고!!!
+@login_required   #delete가 된다면 host였다는 거고 아니면 이제 host가 되고 싶다는 뜻
+def switch_hosting(request):
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        request.session["is_hosting"] = True
+    return redirect(reverse("core:home"))
 
 
 
