@@ -1,9 +1,11 @@
 from ast import Expression, Try
 from dataclasses import field
 from math import ceil
+from msilib.schema import File
+from click import confirmation_option
 from django.core import paginator  # 올림함수 import
 from django.core.paginator import EmptyPage, Paginator
-from django.views.generic import ListView, DetailView, View, UpdateView  # ListView 사용하기 위해 추가
+from django.views.generic import ListView, DetailView, View, UpdateView, CreateView, FormView # ListView 사용하기 위해 추가
 from . import models, forms
 from django.shortcuts import redirect, render, reverse
 from django_countries import countries
@@ -193,7 +195,19 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
         room_pk = self.kwargs.get("room_pk")
         return reverse("rooms:photos", kwargs={"pk": room_pk})
 
-    
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, FormView): #우리가 Form을 새로 만들어줬기 때문에 CreateView가 아닌 FormView사용
+
+    model = models.Photo
+    template_name = "rooms/photo_create.html"
+    fields = ("caption", "file")
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("rooms:photos", kwargs={'pk': pk}))
 
 
 
