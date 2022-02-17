@@ -7,8 +7,7 @@ from core import models as core_models
 from users import models as user_models
 
 # host 에서 Foreignkey를 통해 user model과 연결시키기 위해
-# Create your models here.
-
+from cal import Calendar
 
 class AbstractItem(core_models.TimeStampedModel):
     """Abstract Item"""
@@ -126,4 +125,9 @@ class Room(core_models.TimeStampedModel):
     def get_next_four_photos(self):
         photos = self.photos.all()[1:5]
         return photos
+
+
+    def get_calendars(self):
+        calendar = Calendar(2022, 2)
+        return False
 

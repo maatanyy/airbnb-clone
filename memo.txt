@@ -259,3 +259,5 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     is_hosting 같은걸 다 모델에 넣으면 모델이 너무 커짐 session 이용함으로서 이런거 해결가능
     save_m2m() 을 해야 manytomany field 저장가능 (새로운 방 추가시) 근데 form.save 이후에 이걸써야함 공식문서참고
 
+#2022-02-17
+    Calendar 시작 cal.py에 달력에 대한 클래스 만들고 room model에 import해서 씀
