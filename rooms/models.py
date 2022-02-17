@@ -8,6 +8,8 @@ from users import models as user_models
 
 # host 에서 Foreignkey를 통해 user model과 연결시키기 위해
 from cal import Calendar
+from django.utils import timezone
+from dateutil import relativedelta
 
 class AbstractItem(core_models.TimeStampedModel):
     """Abstract Item"""
@@ -128,6 +130,9 @@ class Room(core_models.TimeStampedModel):
 
 
     def get_calendars(self):
-        calendar = Calendar(2022, 2)
-        return False
+        today = timezone.localtime(timezone.now()).date()
+        nextmonth = today + relativedelta.relativedelta(months=1)
+        this_month = Calendar(today.year, today.month)
+        next_month = Calendar(nextmonth.year, nextmonth.month)
+        return [this_month, next_month]
 
