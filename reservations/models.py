@@ -1,4 +1,4 @@
-from re import S
+import datetime
 from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
@@ -57,11 +57,15 @@ class Reservation(core_models.TimeStampedModel):
     is_finished.boolean = True
 
     def save(self, *args, **kwargs):
-        if True:
+        if self.pk is None:       #self.pk가 none이면 우리가 생성하려는 모델이 새로운 거라는 뜻
             start = self.check_in
             end = self.check_out
             difference = end - start
             existing_booked_day = BookedDay.objects.filter(day__range=(start, end)).exists() #있는지 체크하는 방법
-            if existing_booked_day == False:
-                pass
+            if not existing_booked_day:  #만약 존재하지 않는다면
+                super().save(*args, **kwargs)   # Reservation 저장
+                for i in range(difference.days + 1):
+                    day = start + datetime.timedelta(days=i)
+                    BookedDay.objects.create(day=day, reservation=self)
+                return 
         return super().save(*args, **kwargs)
