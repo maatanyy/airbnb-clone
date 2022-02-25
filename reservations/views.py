@@ -1,11 +1,13 @@
 from ast import Try
 import datetime
+from re import M
 from django.shortcuts import render
 from django.views.generic import View
 from rooms import models as room_models
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from . import models
+import reservations
 
 
 class CreateError(Exception):
@@ -31,6 +33,8 @@ def create(request, room, year, month, day):
         return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
 
 
-class ReservationDetailView(View):
-    def get(self):
-        pass
+class ReservationDetailView(View):  #그냥 view를 상속한 이유, get_method를 컨트롤 하고 싶어서
+    def get(self, pk):
+        try:
+            reservation = models.Reservation.objects.get(pk=pk)
+        except:

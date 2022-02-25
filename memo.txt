@@ -268,3 +268,5 @@ get_absolute_url 어떤 url을 갖고있던 지정하는곳으로 이동 (어드
     필터만들고 load해서 쓰면된다!
     BookedDay를 만든 이유 !! 예를들어 2.10~17 예약이면 10,17이 예약인건 아는데 그 사이는 예약인걸 알수 없다
     따라서 reservation이 만들어질때 Foreignkey를 이용하여 BookedDay를 만들고 그사이 기간도 알 수있게한다
+    ``~~.DoesNoTExit 이런거 매번하기 귀찮아서 manager를 이용했음 managers.py 추가하고 씀 중요한점은
+    model에 manager를 추가해줘야함  왜냐하면 모델은 기본으로 자기만의 manager를 가지고있기때문에 (이게 확장하는 느낌임)

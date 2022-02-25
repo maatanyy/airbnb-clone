@@ -3,6 +3,7 @@ from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
+from . import managers
 
 # Create your models here.
 
@@ -43,6 +44,7 @@ class Reservation(core_models.TimeStampedModel):
     room = models.ForeignKey(
         "rooms.Room", related_name="reservations", on_delete=models.CASCADE
     )
+    objects = managers.CustomReservationManager()
 
     def __str__(self):
         return f"{self.room} - {self.check_in}"
