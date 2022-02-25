@@ -1,8 +1,19 @@
+from re import S
+from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
 from core import models as core_models
 
 # Create your models here.
+
+class BookedDay(core_models.TimeStampedModel):
+
+    day = models.DateField()
+    reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Booked Day"
+        verbose_name_plural = "Booked Days"
 
 
 class Reservation(core_models.TimeStampedModel):
@@ -44,3 +55,13 @@ class Reservation(core_models.TimeStampedModel):
         return now > self.check_out
 
     is_finished.boolean = True
+
+    def save(self, *args, **kwargs):
+        if True:
+            start = self.check_in
+            end = self.check_out
+            difference = end - start
+            existing_booked_day = BookedDay.objects.filter(day__range=(start, end)).exists() #있는지 체크하는 방법
+            if existing_booked_day == False:
+                pass
+        return super().save(*args, **kwargs)
