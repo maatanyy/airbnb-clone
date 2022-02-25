@@ -1,4 +1,15 @@
+from django.utils import timezone
 import calendar
+
+class Day:
+
+    def __init__(self, number, past):
+        self.number = number
+        self.past = past
+
+    def __str__(self):
+        return str(self.number)
+
 
 class Calendar(calendar.Calendar):
 
@@ -27,9 +38,16 @@ class Calendar(calendar.Calendar):
         days = []
         for week in weeks:
             for day, _ in week:
-                days.append(day)
-        return days 
-
+                now = timezone.now()
+                today = now.day
+                month = now.month
+                past = False
+                if month == self.month:
+                    if day <= today:
+                        past = True
+                new_day = Day(day, past)
+                days.append(new_day)
+        return days
 
     def get_month(self):
-        return self.months[self.month -1]
+        return self.months[self.month - 1]
